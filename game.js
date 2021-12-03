@@ -1,26 +1,77 @@
+const buttons = document.querySelectorAll('.playBtn');
+const displayScorePlayer = document.querySelector('#player-score');
+const displayScoreComp = document.querySelector('#computer-score');
+const playerChoiceImg = document.querySelector('#player-choice');
+const compChoiceImg = document.querySelector('#comp-choice');
+const playBtns = document.querySelector('.btnBox');
+const gameOvr = document.querySelector('.results');
+let playerScore = 0;
+let computerScore = 0;
+let tieScore = 0;
+let playerSelection;
+displayScorePlayer.innerHTML = playerScore;
+displayScoreComp.innerHTML = computerScore;
+
+
 function computerPlay() {
     let randomReturn = Math.floor(Math.random() * 3);
 
     switch(randomReturn) {
         case 0:
             result = 'rock';
+            compChoiceImg.setAttribute('src', 'images/rock.jpg');
+            compChoiceImg.classList.add('active');
             break;
         case 1:
             result = 'paper';
+            compChoiceImg.setAttribute('src', 'images/paper.jpg');
+            compChoiceImg.classList.add('active');
             break;
         case 2:
             result = 'scissors';
+            compChoiceImg.setAttribute('src', 'images/scissors.jpg');
+            compChoiceImg.classList.add('active');
             break;
     }
     return result;
 }
 
-function playerPlay() {
-    let select = prompt('Enter your choice: Rock, Paper, or Scissors');
-    let selection = select.toLowerCase();
+function playerPlay(choice) {
+    let playerResult;
 
-    return selection;
+    switch(choice) {
+        case 'play-rock':
+            playerResult = 'rock';
+            playerChoiceImg.setAttribute('src', 'images/rock.jpg');
+            playerChoiceImg.classList.add('active');
+            break;
+        case 'play-paper':
+            playerResult = 'paper';
+            playerChoiceImg.setAttribute('src', 'images/paper.jpg');
+            playerChoiceImg.classList.add('active');
+            break;
+        case 'play-scissors':
+            playerResult = 'scissors';
+            playerChoiceImg.setAttribute('src', 'images/scissors.jpg');
+            playerChoiceImg.classList.add('active');
+            break;
+    }
+    return playerResult;
 }
+
+buttons.forEach((button) => {
+    button.addEventListener('click', () => {
+        let btnId = button.id;
+        let btnString = btnId.toString();
+        playerSelection = playerPlay(btnString);
+        playRound(playerSelection, computerPlay());
+
+        if(playerScore == 5 || computerScore == 5) {
+            declareWinner();
+        }
+    });
+
+})
 
 function playRound(playerSelection, computerSelection) {
     let result;
@@ -47,77 +98,46 @@ function playRound(playerSelection, computerSelection) {
         result = 'win';
     }
 
-    return result;
+    keepScore(result);
 }
 
-//let playerSelection = playerPlay();
-//let computerSelection = computerPlay();
-//console.log(playRound(playerSelection, computerSelection));
 
-function game() {
-    let playerScore = 0;
-    let computerScore = 0;
-    let tieScore = 0;
-    let round = 1;
-    let roundResult;
-    let winner;
+function keepScore(roundResult) {
 
-    /*if(roundResult.includes('win')) {
+    if(roundResult === 'win') {
         playerScore++;
-    }else if(roundResult.includes('lose')) {
-        computerScore++;
-    } else {
-        tieScore++;
-    }*/
-
-    for(let i = 0; i < 5; i++) {
-        //playRound(playerSelection, computerSelection);
-            roundResult = playRound(playerPlay(), computerPlay()); //this is where it breaks, playRound is not called for each loop 
-            //it is only called once and the same values used. why?????
-
-            if(roundResult === 'win') {
-                playerScore++;
-            }else if(roundResult === 'loss') {
-                computerScore++;
-            } else {
-                tieScore++;
-            }
-
-            round++;
-
-
-        /*if(round === 5 && playerScore > computerScore) {
-            winner = 'Congratulations, you win!';
-        } else if(round === 5 && playerScore < computerScore) {
-            winner = 'You lose, better luck next time!';
-        } else {
-            winner = 'Looks like this one is a draw!';
-        }*/
-    }
-
-    /*if(roundResult === 'win') {
-        playerScore++;
+        displayScorePlayer.innerHTML = `${playerScore}`;
     }else if(roundResult === 'loss') {
         computerScore++;
+        displayScoreComp.innerHTML = `${computerScore}`;
     } else {
         tieScore++;
     }
-
-    round++;*/
-
-    if(round === 6 && playerScore > computerScore) {
-        winner = 'Congratulations, you win!';
-    } else if(round === 6 && playerScore < computerScore) {
-        winner = 'You lose, better luck next time!';
-    } else {
-        winner = 'Looks like this one is a draw!';
-    }
-
-    //console.log(playerScore);
-    //console.log(computerScore);
-    //console.log(tieScore);
-
-    return winner;
 }
 
-console.log(game());
+function declareWinner() {
+    let winner = document.querySelector('#winner');
+
+    if(playerScore == 5) {
+        winner.innerHTML = 'You win!';
+    } else {
+        winner.innerHTML = 'You lose, try again!';
+    }
+
+    playBtns.classList.remove('active');
+    gameOvr.classList.add('active');
+
+}
+
+
+    const reset = document.querySelector('#end-game');
+    reset.addEventListener('click', () => {
+        gameOvr.classList.remove('active');
+        playerScore = 0;
+        computerScore = 0;
+        displayScorePlayer.innerHTML = playerScore;
+        displayScoreComp.innerHTML = computerScore;
+        compChoiceImg.classList.remove('active');
+        playerChoiceImg.classList.remove('active');
+        playBtns.classList.add('active');
+    });

@@ -1,0 +1,121 @@
+html {
+  background-color: rgb(212, 238, 244);
+  text-align: center;
+}
+
+.flex {
+  display: flex;
+}
+
+h1 {
+  font-size: 3.5rem;
+}
+
+h2 {
+  font-size: 2rem;
+}
+
+#score-box {
+  justify-content: space-around;
+  height: auto;
+  width: 75%;
+  margin: 0 auto;
+}
+
+.scoreCard {
+  background-color: rgb(102, 102, 102);
+  width: 40%;
+  border: 1px solid white;
+  border-radius: 20px;
+}
+
+.score {
+  font-size: 3rem;
+  line-height: 3.5rem;
+}
+
+.scoreP {
+  margin: 0;
+}
+
+.playerSelect,
+.computerSelect {
+  padding: 1.5rem;
+  height: 8rem;
+}
+
+img {
+  visibility: hidden;
+  display: block;
+  margin: 0 auto;
+  width: 8.5rem;
+  height: 8.5rem;
+  border-radius: 50%;
+}
+
+img.active {
+  visibility: visible;
+}
+
+.btnBox {
+  display: none;
+  justify-content: space-evenly;
+  align-items: center;
+  height: 13.5rem;
+  width: 90%;
+  margin: 0 auto;
+}
+
+.btnBox.active {
+  display: flex;
+}
+
+button {
+  height: 11rem;
+  width: 11rem;
+  border: 2px solid black;
+  border-radius: 50%;
+}
+
+button:hover {
+  cursor: pointer;
+  opacity: 75%;
+}
+
+button#play-rock {
+  background-image: url("../images/rock.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+button#play-paper {
+  background-image: url("../images/paper.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+button#play-scissors {
+  background-image: url("../images/scissors.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: bottom;
+}
+
+.results {
+  display: none;
+}
+
+.results.active {
+  display: block;
+}
+
+#winner {
+  font-size: 2rem;
+}
+
+button#end-game {
+  background-color: rgb(102, 102, 102);
+  height: 8rem;
+  width: 8rem;
+  font-size: 1.2rem;
+}
